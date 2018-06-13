@@ -40,6 +40,8 @@ class AuthTokenMiddleware implements MiddlewareInterface
             $redis = new Redis();
             $user_name = $redis->get($info['token']);
             if(!empty($user_name)){
+                //更新redis
+                $redis->set($info['token'], $user_name, @config('cache.life_time'));
                 return $handler->handle($request);
             }
         }

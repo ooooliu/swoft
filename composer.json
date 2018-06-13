@@ -29,7 +29,8 @@
         "swoft/i18n": "^1.0",
         "swoft/process": "^1.0",
         "swoft/memory": "^1.0",
-        "swoft/service-governance": "^1.0"
+        "swoft/service-governance": "^1.0",
+        "mongodb/mongodb": "^1.3"
     },
     "require-dev": {
         "eaglewu/swoole-ide-helper": "dev-master",

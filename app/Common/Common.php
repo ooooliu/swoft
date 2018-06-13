@@ -11,8 +11,28 @@ namespace App\Common;
 class Common
 {
 
+    /**
+     * 获取视图全路径
+     *
+     * @param string $file
+     * @return string
+     */
     public static function getViewsPath(string $file):string
     {
         return \config('file.admin_path').$file;
+    }
+
+    /**
+     * 验证电子邮件
+     *
+     * @param $email
+     * @return bool
+     */
+    public static function checkMail($email)
+    {
+        //定义正则表达式
+        $check_mail="/\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/";
+
+        return preg_match($check_mail, $email) ? true : false;
     }
 }

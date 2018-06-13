@@ -137,7 +137,7 @@
 
                     <!-- 退出 -->
                     <li class="am-text-sm">
-                        <a href="javascript:;">
+                        <a href="/loginOut?token=<?=$token?>">
                             <span class="am-icon-sign-out"></span> 退出
                         </a>
                     </li>
@@ -228,14 +228,9 @@
                 </ul>
             </li>
             <li class="sidebar-nav-link">
-                <a href="/register">
+                <a href="/register?token=<?=$token?>">
                     <i class="am-icon-clone sidebar-nav-link-logo"></i> 注册
                     <span class="am-badge am-badge-secondary sidebar-nav-link-logo-ico am-round am-fr am-margin-right-sm">6</span>
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="login.html">
-                    <i class="am-icon-key sidebar-nav-link-logo"></i> 登录
                 </a>
             </li>
             <li class="sidebar-nav-link">

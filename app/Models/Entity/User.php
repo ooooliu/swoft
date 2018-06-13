@@ -24,10 +24,6 @@ use Swoft\Db\Types;
  * @Entity()
  * @Table(name="user")
  * @uses      User
- * @version   2017年08月23日
- * @author    stelin <phpcrazy@126.com>
- * @copyright Copyright 2010-2016 Swoft software
- * @license   PHP Version 7.x {@link http://www.php.net/license/3_0.txt}
  */
 class User extends Model
 {
@@ -41,37 +37,45 @@ class User extends Model
     private $id;
 
     /**
-     * 名称
+     * 电子邮件
      *
-     * @Column(name="name", type=Types::STRING, length=20)
-     * @Required()
+     * @Column(name="email", type=Types::STRING, length=64)
      * @var null|string
      */
-    private $name;
+    private $email;
 
     /**
-     * 年龄
+     * 用户密码
      *
-     * @Column(name="age", type=Types::INT)
+     * @Column(name="password", type=Types::STRING, length=128)
+     * @var null|string
+     */
+    private $password;
+
+    /**
+     * 用户名称
+     *
+     * @Column(name="user_name", type=Types::STRING, length=256)
      * @var int
      */
-    private $age = 0;
+    private $userName;
+
 
     /**
-     * 性别
+     * 创建时间
      *
-     * @Column(name="sex", type="int")
+     * @Column(name="create_at")
      * @var int
      */
-    private $sex = 0;
+    public $createTime;
 
     /**
-     * 描述
+     * 更新时间
      *
-     * @Column(name="description", type="string")
+     * @Column(name="update_at")
      * @var string
      */
-    private $desc = '';
+    public $updateTime;
 
     /**
      * 非数据库字段，未定义映射关系
@@ -89,75 +93,67 @@ class User extends Model
     }
 
     /**
-     * @param int|null $id
+     * @return string|null
      */
-    public function setId($id)
+    public function getEmail()
     {
-        $this->id = $id;
+        return $this->email;
     }
 
     /**
-     * @return null|string
+     * @param string $email
      */
-    public function getName()
+    public function setEmail($email)
     {
-        return $this->name;
+        $this->email = $email;
     }
 
     /**
-     * @param null|string $name
+     * @return string|null
      */
-    public function setName($name)
+    public function getPassword()
     {
-        $this->name = $name;
+        return $this->password;
     }
 
     /**
-     * @return int
+     * @param string $password
      */
-    public function getAge(): int
+    public function setPassword($password)
     {
-        return $this->age;
+        $this->password = md5($password);
     }
 
     /**
-     * @param int $age
+     * @return string|null
      */
-    public function setAge(int $age)
+    public function getUserName()
     {
-        $this->age = $age;
+        return $this->userName;
     }
 
     /**
-     * @return int
+     * @param string|null $user_name
      */
-    public function getSex(): int
+    public function setUserName($user_name)
     {
-        return $this->sex;
+        $this->userName = $user_name;
     }
 
     /**
-     * @param int $sex
+     * @return string|null
      */
-    public function setSex(int $sex)
+    public function getCreateTime()
     {
-        $this->sex = $sex;
+        return $this->createTime;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getDesc(): string
+    public function getUpdateTime()
     {
-        return $this->desc;
-    }
-
-    /**
-     * @param string $desc
-     */
-    public function setDesc(string $desc)
-    {
-        $this->desc = $desc;
+        return $this->updateTime;
     }
 
     /**
