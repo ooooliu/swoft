@@ -41,11 +41,9 @@ class IndexController
      */
     public function index(Request $request)
     {
-        $token = $request->query('token');
-
         $title = '用户主页';
 
-        return compact('title', 'css', 'token');
+        return compact('title', 'css');
     }
 
     /**

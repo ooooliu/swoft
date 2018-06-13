@@ -9,6 +9,7 @@
 namespace App\Middlewares;
 
 
+use App\Common\Session;
 use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -34,14 +35,13 @@ class AuthTokenMiddleware implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         //验证用户身份
-        $info = $request->getQueryParams();
-
-        if(!empty($info['token'])){
+        $session_id = Session::getSession($request->getCookieParams());
+        if(!empty($session_id)){
             $redis = new Redis();
-            $user_name = $redis->get($info['token']);
+            $user_name = $redis->get($session_id);
             if(!empty($user_name)){
                 //更新redis
-                $redis->set($info['token'], $user_name, @config('cache.life_time'));
+                $redis->set($session_id, $user_name, @config('cache.life_time'));
                 return $handler->handle($request);
             }
         }

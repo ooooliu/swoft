@@ -10,6 +10,7 @@ namespace App\Services;
 
 
 use App\Common\Common;
+use App\Common\Session;
 use App\Models\Entity\User;
 use Swoft\Db\Db;
 use Swoft\Redis\Redis;
@@ -21,9 +22,14 @@ class UserService
      *
      * @return string
      */
-    public static function token()
+    public static function token():string
     {
         return sha1(time().rand(1000, 9999));
+    }
+
+    public static function getUserInfo($user_id):?array
+    {
+
     }
 
     /**
@@ -33,23 +39,30 @@ class UserService
      * @return array
      * @throws \Exception
      */
-    public static function loginUser($param)
+    public static function loginUser($param):array
     {
-        if(empty($param['user_name']) || empty($param['user_password'])){
+        if(empty($param['email']) || empty($param['password'])){
             throw new \Exception("账号或密码错误", 300);
         }
 
-        //获取token
-        $token = UserService::token();
+        //获取用户信息
+        $user = User::findOne(['email' => $param['email']], ['fields' => ['id', 'password', 'user_name']])->getResult()->getAttrs();
 
-        //创建登录key,添加用户信息到redis
-        $redis = new Redis();
-        $redis->set($token, $param['user_name'], @config('cache.life_time'));
+        if(empty($user) || md5($param['password']) !== $user['password']){
+            throw new \Exception('用户名或密码错误', 300);
+        }
+
+        //获取session
+        $session_id = Session::getSession($param['session']);
+        if(!empty($session_id)){
+            //创建登录key,添加用户信息到redis
+            $redis = new Redis();
+            $redis->set($session_id, $user['userName'], @config('cache.life_time'));
+        }
 
         return [
             'status' => 200,
-            'msg' => '登录成功',
-            'token' => $token
+            'msg' => '登录成功'
         ];
     }
 
@@ -58,7 +71,7 @@ class UserService
      *
      * @param $token
      */
-    public static function loginOutUser($token)
+    public static function loginOutUser($token):void
     {
         if(!empty($token)){
             $redis = new Redis();
@@ -73,7 +86,7 @@ class UserService
      * @return mixed
      * @throws \Exception
      */
-    public static function addUser($param)
+    public static function addUser($param):int
     {
         if(empty($param['email']) || !Common::checkMail($param['email'])){
             throw new \Exception('请填写正确的邮件', 300);

@@ -10,6 +10,7 @@ namespace App\Controllers;
 
 
 use App\Common\Error;
+use App\Common\Session;
 use App\Middlewares\AuthTokenMiddleware;
 use App\Services\UserService;
 use Swoft\Core\Coroutine;
@@ -35,18 +36,18 @@ class LoginController extends BaseController
     public function login(Request $request)
     {
         if($request->getMethod() == 'POST'){
-            $param['user_name'] = $request->post('user_name', '');
-            $param['user_password'] = $request->post('user_password', '');
+            $param['email'] = $request->post('email', '');
+            $param['password'] = $request->post('password', '');
+            //获取客户端cookie
+            $param['session'] = $request->getCookieParams();
 
             try {
-
                 $data = UserService::loginUser($param);
-
+                return response()->json($data);
             }
             catch (\Exception $e) {
-                Error::responseError($e);
+                return Error::responseError($e);
             }
-            return response()->json($data);
         }else{
             $title = '用户登录';
             $css = 'login';
@@ -63,9 +64,9 @@ class LoginController extends BaseController
      */
     public function loginOut(Request $request)
     {
-        $token = $request->query('token', '');
+        $session_id = Session::getSession($request->getCookieParams());
 
-        UserService::loginOutUser($token);
+        UserService::loginOutUser($session_id);
 
         return response()->redirect('/login');
     }
@@ -80,7 +81,6 @@ class LoginController extends BaseController
      */
     public function register(Request $request)
     {
-        $token = $request->query('token', '');
         if($request->getMethod() == 'POST'){
             $param['email'] = $request->post('email', '');
             $param['user_name'] = $request->post('user_name', '');
@@ -103,13 +103,13 @@ class LoginController extends BaseController
                 return response()->json($data);
             }
             catch (\Exception $e) {
-                Error::responseError($e);
+                return Error::responseError($e);
             }
         }else{
             $title = '用户注册';
             $css = 'login';
 
-            return compact('title', 'css', 'token');
+            return compact('title', 'css');
         }
     }
 }

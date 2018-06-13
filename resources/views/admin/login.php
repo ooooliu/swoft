@@ -12,12 +12,12 @@
 
             <form class="am-form tpl-form-line-form">
                 <div class="am-form-group">
-                    <input type="text" class="tpl-form-input" name="user_name" placeholder="请输入账号">
+                    <input type="text" class="tpl-form-input" name="email" placeholder="请输入邮箱">
 
                 </div>
 
                 <div class="am-form-group">
-                    <input type="password" class="tpl-form-input" name="user_password" placeholder="请输入密码">
+                    <input type="password" class="tpl-form-input" name="password" placeholder="请输入密码">
 
                 </div>
                 <div class="am-form-group tpl-login-remember-me">
@@ -38,23 +38,32 @@
         </div>
     </div>
 </div>
+<script src="assets/js/md5.js"></script>
 <script>
     $(function () {
         $('#user_submit').click(function () {
-            $.post(
-                "/login",
-                {
-                    user_name: $('input[name=user_name]').val(),
-                    user_password: $('input[name=user_password]').val()
-                },
-                function(data) {
-                    if(data.status == 200){
-                        window.location.href='/?token='+data.token;
-                    }else{
-                        $.alert.msg(data.msg);
-                    }
-                });
+            submit();
+        });
+        $(this).keyup(function(event){
+            if(event.keyCode ==13){
+                submit();
+            }
         });
     })
+    function submit() {
+        $.post(
+            "/login",
+            {
+                email: $('input[name=email]').val(),
+                password: md5($('input[name=password]').val())
+            },
+            function(data) {
+                if(data.status == 200){
+                    window.location.href='/';
+                }else{
+                    $.alert.msg(data.msg);
+                }
+            });
+    }
 </script>
 <?php include ('footer.php');?>

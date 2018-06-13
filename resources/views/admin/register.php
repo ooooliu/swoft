@@ -69,7 +69,7 @@
                 }*/
 
                 $.post(
-                    "/register?token=<?=$token?>",
+                    "/register",
                     {
                         email: $('input[name=email]').val(),
                         user_name: $('input[name=user_name]').val(),
@@ -85,7 +85,7 @@
             });
         })
         function home() {
-            window.location.href="/?token=<?=$token?>";
+            window.location.href="/";
         }
     </script>
 <?php include ('footer.php');?>

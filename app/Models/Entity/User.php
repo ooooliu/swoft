@@ -67,7 +67,7 @@ class User extends Model
      * @Column(name="create_at")
      * @var int
      */
-    public $createTime;
+    private $createTime;
 
     /**
      * 更新时间
@@ -75,7 +75,7 @@ class User extends Model
      * @Column(name="update_at")
      * @var string
      */
-    public $updateTime;
+    private $updateTime;
 
     /**
      * 非数据库字段，未定义映射关系
@@ -90,6 +90,14 @@ class User extends Model
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     /**
@@ -149,11 +157,27 @@ class User extends Model
     }
 
     /**
+     * @param string|null $create_time
+     */
+    public function setCreateTime($create_time)
+    {
+        $this->createTime = $create_time;
+    }
+
+    /**
      * @return string|null
      */
     public function getUpdateTime()
     {
         return $this->updateTime;
+    }
+
+    /**
+     * @param string|null $update_time
+     */
+    public function setUpdateTime($update_time)
+    {
+        $this->updateTime = $update_time;
     }
 
     /**

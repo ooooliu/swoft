@@ -23,5 +23,6 @@ return [
         'useProvider' => false,
         'balancer' => 'random',
         'provider' => 'consul',
-    ]
+    ],
+    'session_id' => 'SWOFT_SESSION_ID'
 ];
