@@ -40,3 +40,5 @@ INSERT INTO `user` (`email`, `password`, `user_name`) VALUES ('admin@qq.com', 'c
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+/*账户:admin 密码:admin*/
