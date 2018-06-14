@@ -3,7 +3,6 @@
 <script src="assets/js/dataTables.responsive.min.js"></script>
 <script src="assets/js/app.js"></script>
 <script src="assets/js/alert.js?v=3"></script>
-
 </body>
 
 </html>

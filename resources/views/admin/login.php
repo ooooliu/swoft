@@ -2,7 +2,7 @@
 
 <div class="am-g tpl-g">
     <!-- 风格切换 -->
-    <?php include ('skiner.php');?>
+    <?php include('c_skiner.php');?>
 
     <div class="tpl-login">
         <div class="tpl-login-content">

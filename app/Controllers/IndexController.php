@@ -43,6 +43,111 @@ class IndexController
     {
         $title = '用户主页';
 
+        return compact('title');
+    }
+
+    /**
+     * @RequestMapping("/tables")
+     * @View(template="admin/tables")
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function tables(Request $request)
+    {
+        $title = '表格';
+        $css = 'widgets';
+
+        return compact('title', 'css');
+    }
+
+    /**
+     * @RequestMapping("/calendar")
+     * @View(template="admin/calendar")
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function calendar(Request $request)
+    {
+        $title = '日历';
+        $css = 'widgets';
+
+        return compact('title', 'css');
+    }
+
+    /**
+     * @RequestMapping("/form")
+     * @View(template="admin/form")
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function form(Request $request)
+    {
+        $title = '表单';
+        $css = 'widgets';
+
+        return compact('title', 'css');
+    }
+
+    /**
+     * @RequestMapping("/chart")
+     * @View(template="admin/chart")
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function chart(Request $request)
+    {
+        $title = '图表';
+        $css = 'chart';
+
+        return compact('title', 'css');
+    }
+
+    /**
+     * @RequestMapping("/table_list")
+     * @View(template="admin/table_list")
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function tableList(Request $request)
+    {
+        $title = '文字列表';
+        $css = 'widgets';
+
+        return compact('title', 'css');
+    }
+
+    /**
+     * @RequestMapping("/table_img")
+     * @View(template="admin/table_img")
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function tableImg(Request $request)
+    {
+        $title = '图文列表';
+        $css = 'widgets';
+
+        return compact('title', 'css');
+    }
+
+    /**
+     * @RequestMapping("/error")
+     * @View(template="admin/error")
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function error(Request $request)
+    {
+        $title = '404错误';
+        $css = 'widgets';
+
         return compact('title', 'css');
     }
 
