@@ -21,12 +21,10 @@
 
                 </div>
                 <div class="am-form-group tpl-login-remember-me">
-                    <input id="remember-me" type="checkbox">
+                    <input id="remember-me" type="checkbox" checked="checked" >
                     <label for="remember-me">
-
                         记住密码
                     </label>
-
                 </div>
 
                 <div class="am-form-group">
@@ -39,23 +37,44 @@
     </div>
 </div>
 <script src="assets/js/md5.js"></script>
+<script src="assets/js/cookie.js"></script>
 <script>
     $(function () {
         $('#user_submit').click(function () {
             submit();
         });
+        //回车事件
         $(this).keyup(function(event){
             if(event.keyCode ==13){
                 submit();
             }
         });
+
+        var login_email = getCookie('login-email');
+        var login_password = getCookie('login-password');
+
+        if(login_email && login_password){
+            $('input[name=email]').val(login_email);
+            $('input[name=password]').val(login_password);
+        }
     })
     function submit() {
+        var email = $('input[name=email]').val();
+        var password = $('input[name=password]').val();
+
+        //记住密码
+        if($('#remember-me').is(':checked')){
+            setCookie('login-email', email, 1);
+            setCookie('login-password', password, 1);
+        }else{
+            delCookie('login-email');
+            delCookie('login-password');
+        }
         $.post(
             "/login",
             {
-                email: $('input[name=email]').val(),
-                password: md5($('input[name=password]').val())
+                email: email,
+                password: md5(password)
             },
             function(data) {
                 if(data.status == 200){

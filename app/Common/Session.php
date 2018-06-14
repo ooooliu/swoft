@@ -11,7 +11,7 @@ namespace App\Common;
 
 class Session
 {
-    public static function getSession(array $session):string
+    public static function getSession(array $session):?string
     {
         return @$session[@config('service.session_id')];
     }

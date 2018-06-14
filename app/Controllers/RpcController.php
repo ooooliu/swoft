@@ -11,6 +11,7 @@
 namespace App\Controllers;
 
 use App\Lib\DemoInterface;
+use App\Services\RpcService;
 use Swoft\Bean\Annotation\Inject;
 use Swoft\Http\Server\Bean\Annotation\Controller;
 use Swoft\Http\Server\Bean\Annotation\RequestMapping;
