@@ -8,7 +8,7 @@
  */
 
 return [
-    'life_time' => 60 * 2,
+    'life_time' => 60 * 10,
     'redis'     => [
         'name'        => 'redis',
         'uri'         => [
