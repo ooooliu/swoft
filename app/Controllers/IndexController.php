@@ -12,6 +12,7 @@ namespace App\Controllers;
 
 
 use App\Middlewares\AuthTokenMiddleware;
+use App\Services\UserService;
 use Swoft\App;
 use Swoft\Core\Coroutine;
 use Swoft\Http\Message\Bean\Annotation\Middleware;
@@ -43,7 +44,9 @@ class IndexController
     {
         $title = '用户主页';
 
-        return compact('title');
+        $user = UserService::getUser();
+
+        return compact('title', 'user');
     }
 
     /**

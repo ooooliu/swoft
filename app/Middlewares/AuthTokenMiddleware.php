@@ -38,10 +38,13 @@ class AuthTokenMiddleware implements MiddlewareInterface
         $session_id = Session::getSession($request->getCookieParams());
         if(!empty($session_id)){
             $redis = new Redis();
-            $user_name = $redis->get($session_id);
-            if(!empty($user_name)){
+            $user = $redis->get($session_id);
+            if(!empty($user)){
+                //保存session
+                $_SESSION['user'] = json_decode($user, true);
+
                 //更新redis
-                $redis->set($session_id, $user_name, @config('cache.life_time'));
+                $redis->set($session_id, $user, @config('cache.life_time'));
                 return $handler->handle($request);
             }
         }

@@ -27,9 +27,18 @@ class UserService
         return sha1(time().rand(1000, 9999));
     }
 
-    public static function getUserInfo($user_id):?array
+    /**
+     * 获取当前登录用户信息
+     *
+     * @return array|null
+     */
+    public static function getUser():?array
     {
-
+        return [
+            'user_id' => Session::getUserId(),
+            'user_name' => Session::getUserName(),
+            'user_email' => Session::getUserEmail(),
+        ];
     }
 
     /**
@@ -46,7 +55,7 @@ class UserService
         }
 
         //获取用户信息
-        $user = User::findOne(['email' => $param['email']], ['fields' => ['id', 'password', 'user_name']])->getResult()->getAttrs();
+        $user = User::findOne(['email' => $param['email']], ['fields' => ['id', 'email', 'password', 'user_name', 'sex']])->getResult()->getAttrs();
 
         if(empty($user) || md5($param['password']) !== $user['password']){
             throw new \Exception('用户名或密码错误', 300);
@@ -57,7 +66,7 @@ class UserService
         if(!empty($session_id)){
             //创建登录key,添加用户信息到redis
             $redis = new Redis();
-            $redis->set($session_id, $user['userName'], @config('cache.life_time'));
+            $redis->set($session_id, json_encode($user), @config('cache.life_time'));
         }
 
         return [
