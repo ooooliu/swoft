@@ -60,6 +60,14 @@ class User extends Model
      */
     private $userName;
 
+    /**
+     * 用户性别
+     *
+     * @Column(name="sex", type=Types::INT)
+     * @var int
+     */
+    private $sex;
+
 
     /**
      * 创建时间
@@ -146,6 +154,22 @@ class User extends Model
     public function setUserName($user_name)
     {
         $this->userName = $user_name;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getSex()
+    {
+        return $this->sex;
+    }
+
+    /**
+     * @param int $sex
+     */
+    public function setSex($sex = 1)
+    {
+        $this->sex = $sex;
     }
 
     /**

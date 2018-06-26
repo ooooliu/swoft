@@ -55,7 +55,9 @@ class UserService
         }
 
         //获取用户信息
-        $user = User::findOne(['email' => $param['email']], ['fields' => ['id', 'email', 'password', 'user_name', 'sex']])->getResult()->getAttrs();
+        $user = User::findOne(['email' => $param['email']], ['fields' => ['id', 'email', 'password', 'user_name', 'sex']])->getResult();
+
+        $user && $user = $user->getAttrs();
 
         if(empty($user) || md5($param['password']) !== $user['password']){
             throw new \Exception('用户名或密码错误', 300);

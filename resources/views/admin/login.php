@@ -70,6 +70,7 @@
             delCookie('login-email');
             delCookie('login-password');
         }
+
         $.post(
             "/login",
             {
