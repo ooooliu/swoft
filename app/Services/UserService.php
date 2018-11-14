@@ -10,6 +10,7 @@ namespace App\Services;
 
 
 use App\Common\Common;
+use App\Common\Predis;
 use App\Common\Session;
 use App\Models\Entity\User;
 use Swoft\Db\Db;

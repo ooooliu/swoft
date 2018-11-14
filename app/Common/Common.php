@@ -28,11 +28,22 @@ class Common
      * @param $email
      * @return bool
      */
-    public static function checkMail($email)
+    public static function checkMail($email):bool
     {
         //定义正则表达式
         $check_mail="/\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/";
 
         return preg_match($check_mail, $email) ? true : false;
+    }
+
+    /**
+     * 判断是不是json
+     *
+     * @param $string
+     * @return bool
+     */
+    public static function isJson($string):bool
+    {
+        return !is_null(@json_decode($string));
     }
 }
